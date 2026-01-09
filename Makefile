@@ -1,13 +1,19 @@
-.PHONY: all build open clean
+.PHONY: all build open down clean
 
-all: build open
+all: build run open
+
+run:
+	docker compose up -d
 
 build:
-	docker compose up -d
+	docker compose build
 
 open:
 	sleep 5
 	open http://localhost:5678
 
-clean:
+down:
 	docker compose down
+
+clean: down
+	docker system prune

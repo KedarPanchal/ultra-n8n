@@ -1,11 +1,18 @@
 services:
   n8n:
-    image: docker.n8n.io/n8nio/n8n
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "5678:5678"
     volumes:
       - n8n-data:/home/node/.n8n
+    environment:
+      - NODE_PATH=/opt/nodejs/node-v22.21.1/lib/node_modules
+      - NODE_FUNCTION_ALLOW_EXTERNAL=*
+      - NODE_FUNCTION_ALLOW_BUILTIN=*
 
 volumes:
   n8n-data:
     driver: local
+
