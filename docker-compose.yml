@@ -1,8 +1,6 @@
 services:
   n8n:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: docker.n8n.io/n8nio/n8n:latest
     ports:
       - "5678:5678"
     volumes:
@@ -11,6 +9,15 @@ services:
       - NODE_PATH=/opt/nodejs/node-v22.21.1/lib/node_modules
       - NODE_FUNCTION_ALLOW_EXTERNAL=*
       - NODE_FUNCTION_ALLOW_BUILTIN=*
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
+  browserless:
+    image: browserless/chrome:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - MAX_CONCURRENT_SESSIONS=5
+      - PREBOOT_CHROME=true
 
 volumes:
   n8n-data:

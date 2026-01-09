@@ -6,7 +6,7 @@ run:
 	docker compose up -d
 
 build:
-	docker compose build
+	docker compose build --no-cache
 
 open:
 	sleep 5
