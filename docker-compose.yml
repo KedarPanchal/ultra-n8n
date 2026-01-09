@@ -5,6 +5,8 @@ services:
       - "5678:5678"
     volumes:
       - n8n-data:/home/node/.n8n
+    networks:
+      - n8n-network
     environment:
       - NODE_PATH=/opt/nodejs/node-v22.21.1/lib/node_modules
       - NODE_FUNCTION_ALLOW_EXTERNAL=*
@@ -15,11 +17,36 @@ services:
     image: browserless/chrome:latest
     ports:
       - "3000:3000"
+    networks:
+      - n8n-network
     environment:
       - MAX_CONCURRENT_SESSIONS=5
       - PREBOOT_CHROME=true
 
+  ollama:
+    build:
+      context: docker/ollama
+      dockerfile: Dockerfile
+    ports:
+      - "11434:11434"
+    networks:
+      - n8n-network
+    volumes:
+      - ollama-data:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - MODELS=nomic-embed-text
+      - OLLAMA_HOST=0.0.0.0:11434
+
+
+networks:
+  n8n-network:
+    driver: bridge
+
+
 volumes:
   n8n-data:
+    driver: local
+  ollama-data:
     driver: local
 
