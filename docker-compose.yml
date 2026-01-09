@@ -5,13 +5,11 @@ services:
       - "5678:5678"
     volumes:
       - n8n-data:/home/node/.n8n
+      - ./shared:/data/shared
     networks:
       - n8n-network
     environment:
-      - NODE_PATH=/opt/nodejs/node-v22.21.1/lib/node_modules
-      - NODE_FUNCTION_ALLOW_EXTERNAL=*
-      - NODE_FUNCTION_ALLOW_BUILTIN=*
-      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+      - N8N_FILE_ALLOWED_PATHS=/data/shared
 
   browserless:
     image: browserless/chrome:latest
