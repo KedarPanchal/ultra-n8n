@@ -9,7 +9,8 @@ services:
     networks:
       - n8n-network
     environment:
-      - N8N_FILE_ALLOWED_PATHS=/data/shared
+      - N8N_BLOCK_FILE_ACCESS_TO_N8N_FILES=false
+      - N8N_RESTRICT_FILE_ACCESS_TO=/data/shared
 
   browserless:
     image: browserless/chrome:latest

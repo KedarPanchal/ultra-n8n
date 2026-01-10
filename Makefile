@@ -16,4 +16,4 @@ down:
 	docker compose down
 
 clean: down
-	docker system prune
+	yes | docker system prune
