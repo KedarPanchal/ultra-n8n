@@ -12,16 +12,6 @@ services:
       - N8N_BLOCK_FILE_ACCESS_TO_N8N_FILES=false
       - N8N_RESTRICT_FILE_ACCESS_TO=/data/shared
 
-  browserless:
-    image: browserless/chrome:latest
-    ports:
-      - "3000:3000"
-    networks:
-      - n8n-network
-    environment:
-      - MAX_CONCURRENT_SESSIONS=5
-      - PREBOOT_CHROME=true
-
   ollama:
     build:
       context: docker/ollama
@@ -37,6 +27,26 @@ services:
       - MODELS=nomic-embed-text
       - OLLAMA_HOST=0.0.0.0:11434
 
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+    networks:
+      - n8n-network
+    volumes:
+      - qdrant-storage:/qdrant/storage
+    restart: unless-stopped
+
+  browserless:
+    image: browserless/chrome:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - n8n-network
+    environment:
+      - MAX_CONCURRENT_SESSIONS=5
+      - PREBOOT_CHROME=true
+
 
 networks:
   n8n-network:
@@ -47,5 +57,7 @@ volumes:
   n8n-data:
     driver: local
   ollama-data:
+    driver: local
+  qdrant-storage:
     driver: local
 
