@@ -1,0 +1,895 @@
+{
+  "name": "Cover Letter",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Job Description: {{ $('Submit Job Description').item.json['Job Description'] }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Generate a professional cover letter tailored to the job description, highlighting the most important skills and experiences from my resume. Be \n\nThe cover letter should:\n- Be clear, concise, short, and professional\n- Address the key requirements of the job description\n- Demonstrate enthusiasm and fit for the role"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -208,
+        720
+      ],
+      "id": "e81edaab-76dc-4c6b-bd19-e063c34055ff",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "z-ai/glm-4.5-air:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        912
+      ],
+      "id": "d860dbe2-9bdb-4662-8a99-b2db002ca374",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "1599VTUqP3R2NYuh",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        1664,
+        128
+      ],
+      "id": "9064da16-ddde-4f92-8dc7-846daf639f96",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 400,
+        "chunkOverlap": 100,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1664,
+        288
+      ],
+      "id": "5009ff11-57eb-4ec5-bad5-6a165de4594d",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $json.value }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1136,
+        -64
+      ],
+      "id": "511bb5fb-9a54-4bac-aba6-6ec9e8e8f7f3",
+      "name": "Retrieve Resume",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "Jllqg0LLeONTORn2",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "resume-context",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        1552,
+        -64
+      ],
+      "id": "d6627e9f-5498-4f24-bf7f-5f3a8c866f74",
+      "name": "Create RAG Context",
+      "credentials": {
+        "qdrantApi": {
+          "id": "BZeJplRAY2wDnR4a",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        1552,
+        128
+      ],
+      "id": "bf2f19df-281c-40f5-adcd-ab9ac6684ae9",
+      "name": "Ingestion Embeddings Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "Ul7eoVbY8RBsd68F",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Retrieve data about the user's resume",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "resume-context",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        -192,
+        608
+      ],
+      "id": "5e0be5c6-796e-4981-9c10-cbc85530a559",
+      "name": "Query RAG Context",
+      "credentials": {
+        "qdrantApi": {
+          "id": "BZeJplRAY2wDnR4a",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        464
+      ],
+      "id": "66b148de-73cf-4946-b22c-0cdc17714cc2",
+      "name": "Query Embeddings Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "Ul7eoVbY8RBsd68F",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"company\": {\n\t\t\t\"type\": \"string\"\n\t\t},\n        \"job-title\": {\n          \"type\": \"string\"\n        },\n        \"content\": {\n          \"type\": \"string\"\n        }\n\t}\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        912
+      ],
+      "id": "72044bbe-c5fe-479c-bdae-b6718b27ab1a",
+      "name": "Format Output"
+    },
+    {
+      "parameters": {
+        "folderId": "default",
+        "title": "=Cover Letter: {{ $json.output.company }} - {{ $json.output['job-title'] }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        192,
+        720
+      ],
+      "id": "45f61d2f-1790-41b0-a092-d8eeb6521494",
+      "name": "Create Cover Letter",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "Jllqg0LLeONTORn2",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('AI Agent').item.json.output.content }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        400,
+        720
+      ],
+      "id": "1d36f74c-2d94-48d3-9896-ddbbc0d98bf6",
+      "name": "Add Content",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "Jllqg0LLeONTORn2",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "move",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Create Cover Letter').item.json.id }}",
+          "mode": "id"
+        },
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.value }}",
+          "mode": "url"
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        816,
+        720
+      ],
+      "id": "f5fa2de6-7088-4db2-862d-477bf6cde13e",
+      "name": "Organize Cover Letter",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "a00G92ATIWUnf1Xt",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteCollection",
+        "collectionName": "resume-context",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-qdrant.qdrant",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -64
+      ],
+      "id": "0bfc6cd7-ecb8-4a3d-b194-91efc0d07cc8",
+      "name": "Reset RAG Context",
+      "credentials": {
+        "qdrantRestApi": {
+          "id": "qmC6YObVgWOKs3gS",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        528,
+        -64
+      ],
+      "id": "0edee09a-5f59-47ac-9710-2d7eef4f2a36",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "content",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1344,
+        -64
+      ],
+      "id": "b019c312-5a56-4930-ab89-81818887448b",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "content": "## Update Context",
+        "height": 560,
+        "width": 1456,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        480,
+        -128
+      ],
+      "typeVersion": 1,
+      "id": "304d10a5-a3ae-4954-ba2b-752a6e415ea8",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Generate Cover Letter",
+        "height": 672,
+        "width": 368,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -272,
+        384
+      ],
+      "typeVersion": 1,
+      "id": "cbfa14f3-f8a1-49a4-816d-7693752b73dd",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Write to Google Drive",
+        "height": 240,
+        "width": 896
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        144,
+        656
+      ],
+      "typeVersion": 1,
+      "id": "7b1109e5-dd80-48d1-b0f9-56e4146a93ca",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        528,
+        112
+      ],
+      "id": "00cce958-79a5-4d0f-a6ae-799f0cf7809f",
+      "name": "Run Cleanup (Testing)"
+    },
+    {
+      "parameters": {
+        "formTitle": "Cover Letter Generator",
+        "formDescription": "Generates cover letters",
+        "formFields": {
+          "values": [
+            {
+              "fieldName": "Job Description",
+              "fieldLabel": "Job Description",
+              "fieldType": "textarea",
+              "placeholder": "e.g. Acme Company is hiring for...",
+              "requiredField": true
+            },
+            {
+              "fieldName": "Resume URL",
+              "fieldLabel": "Resume URL (overwrites old one)",
+              "placeholder": "e.g. https://docs.google.com/document/example"
+            },
+            {
+              "fieldName": "Cover Letter Folder URL",
+              "fieldLabel": "Cover Letter Folder URL (overwrites old one)",
+              "placeholder": "e.g. https://drive.google.com/drive/example"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.4,
+      "position": [
+        -544,
+        384
+      ],
+      "id": "f2122121-dc2b-41df-b836-b8303df7c7c1",
+      "name": "Submit Job Description",
+      "webhookId": "89752f85-52a3-469d-80d1-4a548d5e8094"
+    },
+    {
+      "parameters": {
+        "keyName": "Resume URL",
+        "valueString": "={{ $('Submit Job Description').item.json['Resume URL'] }}"
+      },
+      "type": "n8n-nodes-datastore.datastore",
+      "typeVersion": 1,
+      "position": [
+        208,
+        -48
+      ],
+      "id": "98f4b5ac-fd6b-483b-a622-155c1c72ac4b",
+      "name": "Set Resume URL"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "keyName": "Resume URL"
+      },
+      "type": "n8n-nodes-datastore.datastore",
+      "typeVersion": 1,
+      "position": [
+        928,
+        -64
+      ],
+      "id": "aad2c109-8bc8-486c-964a-8eb06ab6806d",
+      "name": "Get Resume URL"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Submit Job Description').item.json['Resume URL'] }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    },
+                    "id": "d8090144-a43b-4dd9-9c26-9ed2590b5cc9"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        -48
+      ],
+      "id": "3c1b18ff-705a-447d-9a50-52fb96fcb46c",
+      "name": "Check Resume URL Existence"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "keyName": "Cover Letter Folder URL"
+      },
+      "type": "n8n-nodes-datastore.datastore",
+      "typeVersion": 1,
+      "position": [
+        608,
+        720
+      ],
+      "id": "687ce557-0fbf-4866-8188-f18b1c73b31e",
+      "name": "Get Cover Letter Folder URL"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Submit Job Description').item.json['Cover Letter Folder URL'] }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    },
+                    "id": "10786d56-6d0f-4f9d-b89d-0bbbfc60d241"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        144
+      ],
+      "id": "98d8d357-b8b1-4d65-8e37-bdf2f64603f7",
+      "name": "Check Cover Letter URL Existence"
+    },
+    {
+      "parameters": {
+        "keyName": "Cover Letter Folder URL",
+        "valueString": "={{ $('Submit Job Description').item.json['Cover Letter Folder URL'] }}"
+      },
+      "type": "n8n-nodes-datastore.datastore",
+      "typeVersion": 1,
+      "position": [
+        208,
+        144
+      ],
+      "id": "7153ab4a-dfdb-4819-88cc-d8f9eafae310",
+      "name": "Set Cover Letter Folder URL"
+    },
+    {
+      "parameters": {
+        "content": "## Store Persistent Data",
+        "height": 464,
+        "width": 720,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -272,
+        -128
+      ],
+      "typeVersion": 1,
+      "id": "85ebadf7-270c-45e0-ab86-84f7dfe56317",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "deleteCollection",
+        "collectionName": {
+          "__rl": true,
+          "value": "resume-context",
+          "mode": "list",
+          "cachedResultName": "resume-context"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-qdrant.qdrant",
+      "typeVersion": 1,
+      "position": [
+        736,
+        112
+      ],
+      "id": "cd0ba74b-77eb-413d-b079-fc01f9293863",
+      "name": "Delete RAG Context",
+      "credentials": {
+        "qdrantRestApi": {
+          "id": "qmC6YObVgWOKs3gS",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        48
+      ],
+      "id": "16acdf74-897a-4a21-b695-8db1745b622e",
+      "name": "Branch Off",
+      "alwaysOutputData": false
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Create Cover Letter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Create RAG Context",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Resume": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ingestion Embeddings Model": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Create RAG Context",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query RAG Context": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Embeddings Model": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Query RAG Context",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Output": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Cover Letter": {
+      "main": [
+        [
+          {
+            "node": "Add Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Content": {
+      "main": [
+        [
+          {
+            "node": "Get Cover Letter Folder URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create RAG Context": {
+      "main": [
+        []
+      ]
+    },
+    "Reset RAG Context": {
+      "main": [
+        [
+          {
+            "node": "Get Resume URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check RAG Context Existence": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Reset RAG Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Create RAG Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Cleanup (Testing)": {
+      "main": [
+        [
+          {
+            "node": "Delete RAG Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Submit Job Description": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Branch Off",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Resume URL": {
+      "main": [
+        [
+          {
+            "node": "Retrieve Resume",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Resume URL Existence": {
+      "main": [
+        [
+          {
+            "node": "Set Resume URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Cover Letter Folder URL": {
+      "main": [
+        [
+          {
+            "node": "Organize Cover Letter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Cover Letter URL Existence": {
+      "main": [
+        [
+          {
+            "node": "Set Cover Letter Folder URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Branch Off": {
+      "main": [
+        [
+          {
+            "node": "Check Resume URL Existence",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Check Cover Letter URL Existence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "a7c7e1c5-d9e6-40e0-a28d-fbd451c63f75",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b3d31a9b25b59f765069dd0795a974a7334833c28e26dcc3a923733572dd0ef0"
+  },
+  "id": "Awe8Y1pDMQdiAVVrC96pE",
+  "tags": []
+}
