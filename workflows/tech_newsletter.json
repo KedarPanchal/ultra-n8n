@@ -14,7 +14,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        0,
+        -48,
         0
       ],
       "id": "2a4309b1-5fd5-4ff7-8857-af2320e4efa4",
@@ -23,7 +23,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are a news agent whose purpose is to search for the latest tech/computer science news across a variety of popular channels and output them. Look for the top 7 to 10 stories online. Try to find 10 stories. These articles should be diverse in content; don't have all of the found news be solely covering AI or cryptocurrency, for example. The news should be focused on tech and computer science, and shouldn't be as focused on other disciplines unless there is a direct relation to tech and computer science.\n\nOnly search for news that has been published between {{ $json.startDate }} to {{ $json.endDate }} (the dates are in yyyy-mm-dd format).\n\nYour output should be in JSON format. It should be a single field called results, which contains list of JSON objects. Each object in this list should have the following fields:\n- title: The title of the news you found\n- content: Your summary of the news content. Cover important points in paragraph form in sufficient detail, but avoid repeating yourself. Target for at least two to four detailed paragraphs of summary content. These summaries should have a journalistic tone and should focus on convering information instead of referencing the article or qualities of the article.\n- url: The URL to the article or piece of news covering this information.",
+        "text": "=You are a news agent whose purpose is to search for the latest tech/computer science news across a variety of popular channels and output them. Look for the top 7 to 10 stories online. Try to find 10 stories. These articles should be diverse in content; don't have all of the found news be solely covering AI or cryptocurrency, for example. The news should be focused on tech and computer science, and shouldn't be as focused on other disciplines unless there is a direct relation to tech and computer science. Ensure your news is from a variety of sources (at least 3 different websites).\n\nOnly search for news that has been published between {{ $json.startDate }} to {{ $json.endDate }} (the dates are in yyyy-mm-dd format).\n\nYour output should be in JSON format. It should be a single field called results, which contains list of JSON objects. Each object in this list should have the following fields:\n- title: The title of the news you found\n- date: The date at which the news was published. This must be formatted as a UTC String.\n- content: Your summary of the news content. Cover important points in paragraph form in sufficient detail, but avoid repeating yourself. Target for at least two to four detailed paragraphs of summary content. These summaries should have a journalistic tone and should focus on convering information instead of referencing the article or qualities of the article.\n- url: The URL to the article or piece of news covering this information.",
         "hasOutputParser": true,
         "options": {
           "systemMessage": "Summarize only based on information you searched for using the provided tool calls. Never provide information from your own knowledge.\nYou must utilize tool calls to find your information. When calling the HTTP request tool to search, never include double quotes in your searches."
@@ -38,19 +38,6 @@
       "id": "8183bf06-e574-4e80-9998-1bc3619a2808",
       "name": "AI Agent",
       "retryOnFail": true
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n  \"results\": [\n    {\n      \"title\": \"New Programming Language Accelerates Parallel Computing\",\n      \"content\": \"A new programming language inspired by Python has allowed for quick and easy programming of CUDA GPUs, accelerating the field of parallel computing\",\n      \"url\": \"https://example.com/article\"\n    },\n    {\n      \"title\": \"Quantum Computing Breakthrough Allows for Faster Prime Factorization\",\n      \"content\": \"A new quantum computer architecture developed by Google has allowed for faster performance in prime factorizing large numbers.\",\n      \"url\": \"https://technews.com/news\"\n    }\n  ]\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        560,
-        -144
-      ],
-      "id": "a9a6f793-d927-41d2-866d-07fc44312209",
-      "name": "Structured Output Parser"
     },
     {
       "parameters": {
@@ -105,7 +92,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        208,
+        160,
         0
       ],
       "id": "37d650a3-8a1c-433f-b202-44cfacd2d051",
@@ -113,12 +100,12 @@
     },
     {
       "parameters": {
-        "jsCode": "const fetch = require(\"node-fetch\");\n\n// Fetch the OpenGraph image for a given URL\nconst preview = async (url) => {\n  const defaultURL = \"https://placehold.co/600x400/grey/grey\";\n  const response = await fetch(url);\n  // If response failed, just yield preview image url\n  if (!response) return defaultURL;\n  // Attempt to extract og:image from requested HTML\n  const html = await response.text();\n  const match = [...html.matchAll(/\"og:image\"\\s*?content=\"(.+?)\"/g)];\n  if (match.length === 0) return defaultURL;\n  return match[0][1];\n};\n\n// Convert an item to the RSS feed content\nconst makeItem = (item, img) => `\n    <item>\n      <title>${item.title}</title>\n      <link>${item.url}</link>\n      <description>${item.content}</description>\n      <guid>${item.url}</guid>\n      <media:content url=\"${img}\" medium=\"image\"/>\n    </item>\n`;\n\n// Convert each item to RSS feed content\nconst rssContent = [];\nfor (const item of $input.first().json.output.results) {\n  const itemImg = await preview(item.url);\n  rssContent.push(makeItem(item, itemImg));\n}\n\n// Create the final RSS feed\nconst rssFeed = `\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rss version=\"2.0\" xmlns:media=\"http://search.yahoo.com/mrss/\">\n  <channel>\n    <title>Kedar's Tech Feed</title>\n    <description>Kedar's Daily Tech News Feed</description>\n${rssContent.join('\\n')}\n  </channel>\n</rss>\n`;\nconst buffer = Buffer.from(rssFeed, \"utf-8\");\n\nreturn [{ \n  json: { xml: rssFeed },\n  binary: {\n    data: await this.helpers.prepareBinaryData(buffer)\n  }\n}];"
+        "jsCode": "const fetch = require(\"node-fetch\");\n\n// Fetch the OpenGraph image for a given URL\nconst preview = async (url) => {\n  const defaultURL = \"https://placehold.co/600x400/grey/grey\";\n  const response = await fetch(url);\n  // If response failed, just yield preview image url\n  if (!response) return defaultURL;\n  // Attempt to extract og:image from requested HTML\n  const html = await response.text();\n  const match = [...html.matchAll(/\"og:image\"\\s*?content=\"(.+?)\"/g)];\n  if (match.length === 0) return defaultURL;\n  return match[0][1];\n};\n\n// Convert an item to the RSS feed content\nconst makeItem = (item, img) => `\n    <item>\n      <title>${item.title}</title>\n      <link>${item.url}</link>\n      <description>${item.content}</description>\n      <guid>${item.url}</guid>\n      <media:content url=\"${img}\" medium=\"image\"/>\n      <pubDate>${item.date}</pubDate>\n    </item>\n`;\n\n// Convert each item to RSS feed content\nconst rssContent = [];\nfor (const item of $input.first().json.output.results) {\n  const itemImg = await preview(item.url);\n  rssContent.push(makeItem(item, itemImg));\n}\n\n// Create the final RSS feed\nconst rssFeed = `\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rss version=\"2.0\" xmlns:media=\"http://search.yahoo.com/mrss/\">\n  <channel>\n    <title>Kedar's Tech Feed</title>\n    <description>Kedar's Daily Tech News Feed</description>\n${rssContent.join('\\n')}\n  </channel>\n</rss>\n`;\nconst buffer = Buffer.from(rssFeed, \"utf-8\");\n\nreturn [{ \n  json: { xml: rssFeed },\n  binary: {\n    data: await this.helpers.prepareBinaryData(buffer)\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        768,
+        880,
         0
       ],
       "id": "4263f52e-a12f-4cf7-9336-f32f8ec55286",
@@ -133,8 +120,8 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1.1,
       "position": [
-        992,
-        160
+        1104,
+        224
       ],
       "id": "afa61a61-89db-4c95-80fe-3920b84e549a",
       "name": "Create Local RSS Feed"
@@ -161,8 +148,8 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        1216,
-        -32
+        1328,
+        -64
       ],
       "id": "90f46fa0-0328-4dcc-b080-aeacf78948ae",
       "name": "Create Public RSS Feed",
@@ -197,8 +184,8 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        1216,
-        -224
+        1328,
+        -256
       ],
       "id": "7fa8ffd0-34f1-411d-bf59-247e6df53393",
       "name": "Update Public RSS Feed",
@@ -209,6 +196,96 @@
           "name": "GitHub account"
         }
       }
+    },
+    {
+      "parameters": {
+        "path": "techfeed",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        1104,
+        400
+      ],
+      "id": "31743878-3a90-4324-bcee-d8b43574ce52",
+      "name": "Host Local RSS Feed",
+      "webhookId": "3a4c07f5-44bd-4b1f-964f-9ad54ddac9ad"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/data/shared/techfeed.rss",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        1328,
+        400
+      ],
+      "id": "4114b6f3-18b2-427b-99f9-d8601dc440fc",
+      "name": "Fetch Local RSS Feed"
+    },
+    {
+      "parameters": {
+        "respondWith": "binary",
+        "responseDataSource": "set",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1584,
+        400
+      ],
+      "id": "fb27ca57-dac7-427a-b0c5-494f87f3ceaf",
+      "name": "Serve Local RSS Feed"
+    },
+    {
+      "parameters": {
+        "content": "## Agent\n\nSearches the internet for relevant information and compiles it as a list of JSON elements.",
+        "height": 464,
+        "width": 416,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -128
+      ],
+      "id": "a635a6cc-f447-46b9-827e-175ae10aefca",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"results\": [\n    {\n      \"title\": \"New Programming Language Accelerates Parallel Computing\",\n      \"date\": \"Mon, 06 Apr 2026 00:00:00 GMT\",\n      \"content\": \"A new programming language inspired by Python has allowed for quick and easy programming of CUDA GPUs, accelerating the field of parallel computing\",\n      \"url\": \"https://example.com/article\"\n    },\n    {\n      \"title\": \"Quantum Computing Breakthrough Allows for Faster Prime Factorization\",\n      \"date\": \"Tue, 07 Apr 2026, 01:02:00 IST\",\n      \"content\": \"A new quantum computer architecture developed by Google has allowed for faster performance in prime factorizing large numbers.\",\n      \"url\": \"https://technews.com/news\"\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        608,
+        176
+      ],
+      "id": "a9a6f793-d927-41d2-866d-07fc44312209",
+      "name": "Output"
+    },
+    {
+      "parameters": {
+        "content": "### RSS Hosting\n\nHost the generated RSS feed on a GitHub repository.",
+        "height": 464,
+        "width": 480,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        -368
+      ],
+      "id": "ee19503e-c892-4063-be83-9ba49f4e40b8",
+      "name": "Sticky Note1"
     },
     {
       "parameters": {
@@ -233,11 +310,11 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1.1,
       "position": [
-        1008,
-        -128
+        1104,
+        -160
       ],
       "id": "7712bfa8-448d-4efa-8d04-e414097833d1",
-      "name": "Search for Public RSS Feed",
+      "name": "Check RSS Feed Existence",
       "webhookId": "b955d8c3-9bd4-4671-84d9-54acbeed2c79",
       "credentials": {
         "githubApi": {
@@ -249,48 +326,35 @@
     },
     {
       "parameters": {
-        "path": "techfeed",
-        "responseMode": "responseNode",
-        "options": {}
+        "content": "### Local RSS\n\nStore the RSS feed locally and serve it from the host device.",
+        "height": 464,
+        "width": 720,
+        "color": 4
       },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
       "position": [
-        0,
-        448
+        1056,
+        128
       ],
-      "id": "31743878-3a90-4324-bcee-d8b43574ce52",
-      "name": "Host Local RSS Feed",
-      "webhookId": "3a4c07f5-44bd-4b1f-964f-9ad54ddac9ad"
+      "id": "9e19520d-0928-4ff1-b5d7-7c45b6c55905",
+      "name": "Sticky Note2"
     },
     {
       "parameters": {
-        "fileSelector": "/data/shared/techfeed.rss",
-        "options": {}
+        "content": "## RSS\n\nStore researched information as an RSS feed for easy reading through an RSS reader.",
+        "height": 1152,
+        "width": 1008,
+        "color": 3
       },
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1.1,
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
       "position": [
-        224,
-        448
+        832,
+        -512
       ],
-      "id": "4114b6f3-18b2-427b-99f9-d8601dc440fc",
-      "name": "Fetch Local RSS Feed"
-    },
-    {
-      "parameters": {
-        "respondWith": "binary",
-        "responseDataSource": "set",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.5,
-      "position": [
-        480,
-        448
-      ],
-      "id": "fb27ca57-dac7-427a-b0c5-494f87f3ceaf",
-      "name": "Serve Local RSS Feed"
+      "id": "5dfdcf33-c841-4ec0-b52c-7007d5c8c750",
+      "name": "Sticky Note3"
     }
   ],
   "pinData": {},
@@ -301,17 +365,6 @@
           {
             "node": "Fetch Date",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Structured Output Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_outputParser",
             "index": 0
           }
         ]
@@ -370,7 +423,7 @@
             "index": 0
           },
           {
-            "node": "Search for Public RSS Feed",
+            "node": "Check RSS Feed Existence",
             "type": "main",
             "index": 0
           }
@@ -380,24 +433,6 @@
     "Create Local RSS Feed": {
       "main": [
         []
-      ]
-    },
-    "Search for Public RSS Feed": {
-      "main": [
-        [
-          {
-            "node": "Update Public RSS Feed",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Create Public RSS Feed",
-            "type": "main",
-            "index": 0
-          }
-        ]
       ]
     },
     "Host Local RSS Feed": {
@@ -421,6 +456,35 @@
           }
         ]
       ]
+    },
+    "Output": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check RSS Feed Existence": {
+      "main": [
+        [
+          {
+            "node": "Update Public RSS Feed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Public RSS Feed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -428,7 +492,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "aeaee29a-22e9-4b20-b5e3-524d29354b8c",
+  "versionId": "cf88913e-7565-4420-9636-c3831ebcba93",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b3d31a9b25b59f765069dd0795a974a7334833c28e26dcc3a923733572dd0ef0"
