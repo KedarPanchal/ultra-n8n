@@ -1,0 +1,48 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Kedar's Tech Feed</title>
+    <description>Kedar's Daily Tech News Feed</description>
+
+    <item>
+      <title>Peter Thiel's big bet on solar-powered cow collars</title>
+      <link>https://techcrunch.com/2026/04/04/unpacking-peter-thiels-big-bet-on-solar-powered-cow-collars/</link>
+      <description>Founders Fund led a $220 million Series E round for Halter, a cattle‑management startup that equips livestock with solar‑powered smart collars. The devices monitor health, location and grazing patterns, aiming to boost farm efficiency and reduce environmental impact. Halter’s valuation hit $2 billion, reflecting growing investor interest in ag‑tech solutions that combine renewable energy with IoT data analytics.</description>
+      <guid>https://techcrunch.com/2026/04/04/unpacking-peter-thiels-big-bet-on-solar-powered-cow-collars/</guid>
+    </item>
+
+
+    <item>
+      <title>AI companies are building huge natural gas plants to power data centers. What could go wrong?</title>
+      <link>https://techcrunch.com/2026/04/03/ai-companies-are-building-huge-natural-gas-plants-to-power-data-centers-what-could-go-wrong/</link>
+      <description>Major AI players including Meta, Microsoft and Google are investing in new natural‑gas power plants to supply their ever‑expanding data‑center clusters. Meta recently added seven gas‑fired units to its Hyperion site in Louisiana, giving the campus a total capacity of 7.46 GW—enough to power the state of South Dakota. Industry analysts warn that the rush for gas could strain supply chains, raise emissions, and expose firms to volatile energy markets, potentially undermining the sustainability narrative around AI growth.</description>
+      <guid>https://techcrunch.com/2026/04/03/ai-companies-are-building-huge-natural-gas-plants-to-power-data-centers-what-could-go-wrong/</guid>
+    </item>
+
+
+    <item>
+      <title>Polymarket took down wagers tied to rescue of downed Air Force officer</title>
+      <link>https://techcrunch.com/2026/04/05/polymarket-took-down-wagers-tied-to-rescue-of-downed-air-force-officer/</link>
+      <description>Betting platform Polymarket removed a market that allowed users to speculate on the timing of the U.S. confirmation of a rescue mission for an Air Force officer shot down over Iran. Critics argued the market could incentivize misinformation and exploit a sensitive geopolitical incident. The company said it was pulling the market to comply with emerging regulatory guidance and to avoid further controversy surrounding prediction‑market gambling.</description>
+      <guid>https://techcrunch.com/2026/04/05/polymarket-took-down-wagers-tied-to-rescue-of-downed-air-force-officer/</guid>
+    </item>
+
+
+    <item>
+      <title>In Japan, the robot isn’t coming for your job; it’s filling the one nobody wants</title>
+      <link>https://techcrunch.com/2026/04/05/japan-is-proving-experimental-physical-ai-is-ready-for-the-real-world/</link>
+      <description>Japan’s government is accelerating deployment of physical AI and robotics to address chronic labor shortages. New initiatives fund $6.3 billion in AI research, robotics integration and industrial rollout, targeting a 30 % share of the global physical‑AI market by 2040. Pilot projects are moving from labs to factories, warehouses and elder‑care facilities, showcasing robots that handle repetitive, low‑skill tasks, freeing human workers for higher‑value roles.</description>
+      <guid>https://techcrunch.com/2026/04/05/japan-is-proving-experimental-physical-ai-is-ready-for-the-real-world/</guid>
+    </item>
+
+
+    <item>
+      <title>TechCrunch Mobility: 'A stunning lack of transparency'</title>
+      <link>https://techcrunch.com/2026/04/05/techcrunch-mobility-a-stunning-lack-of-transparency/</link>
+      <description>Senator Markey sent letters to seven autonomous‑vehicle firms—Aurora, May Mobility, Motional, Nuro, Tesla, Waymo and Zoox—questioning their use of remote‑assistance operators who can intervene in vehicle control. Tesla disclosed that its operators can temporarily assume direct control, prompting calls for NHTSA investigations and potential legislation to set strict guardrails on remote‑operator usage. The push highlights growing regulatory scrutiny of AV safety practices.</description>
+      <guid>https://techcrunch.com/2026/04/05/techcrunch-mobility-a-stunning-lack-of-transparency/</guid>
+    </item>
+
+  </channel>
+</rss>
