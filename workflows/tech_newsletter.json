@@ -113,7 +113,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Fetch the OpenGraph image for a given URL\nconst preview = async (url) => {\n  const defaultURL = \"https://placehold.co/600x400/grey/grey\";\n  const response = await fetch(url);\n  // If response failed, just yield preview image url\n  if (!response) return defaultURL;\n  // Attempt to extract og:image from requested HTML\n};\n\n// Convert an item to the RSS feed content\nconst makeItem = item => `\n    <item>\n      <title>${item.title}</title>\n      <link>${item.url}</link>\n      <description>${item.content}</description>\n      <guid>${item.url}</guid>\n    </item>\n`;\n\n// Convert each item to RSS feed content\nconst rssContent = [];\nfor (const item of $input.first().json.output.results) {\n  rssContent.push(makeItem(item));\n}\n\n// Create the final RSS feed\nconst rssFeed = `\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rss version=\"2.0\">\n  <channel>\n    <title>Kedar's Tech Feed</title>\n    <description>Kedar's Daily Tech News Feed</description>\n${rssContent.join('\\n')}\n  </channel>\n</rss>\n`;\nconst buffer = Buffer.from(rssFeed, \"utf-8\");\n\nreturn [{ \n  json: { xml: rssFeed },\n  binary: {\n    data: await this.helpers.prepareBinaryData(buffer)\n  }\n}];"
+        "jsCode": "const fetch = require(\"node-fetch\");\n\n// Fetch the OpenGraph image for a given URL\nconst preview = async (url) => {\n  const defaultURL = \"https://placehold.co/600x400/grey/grey\";\n  const response = await fetch(url);\n  // If response failed, just yield preview image url\n  if (!response) return defaultURL;\n  // Attempt to extract og:image from requested HTML\n  const html = await response.text();\n  const match = [...html.matchAll(/\"og:image\"\\s*?content=\"(.+?)\"/g)];\n  if (match.length === 0) return defaultURL;\n  return match[0][1];\n};\n\n// Convert an item to the RSS feed content\nconst makeItem = (item, img) => `\n    <item>\n      <title>${item.title}</title>\n      <link>${item.url}</link>\n      <description>${item.content}</description>\n      <guid>${item.url}</guid>\n      <media:content url=\"${img}\" medium=\"image\"/>\n    </item>\n`;\n\n// Convert each item to RSS feed content\nconst rssContent = [];\nfor (const item of $input.first().json.output.results) {\n  const itemImg = await preview(item.url);\n  rssContent.push(makeItem(item, itemImg));\n}\n\n// Create the final RSS feed\nconst rssFeed = `\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rss version=\"2.0\" xmlns:media=\"http://search.yahoo.com/mrss/\">\n  <channel>\n    <title>Kedar's Tech Feed</title>\n    <description>Kedar's Daily Tech News Feed</description>\n${rssContent.join('\\n')}\n  </channel>\n</rss>\n`;\nconst buffer = Buffer.from(rssFeed, \"utf-8\");\n\nreturn [{ \n  json: { xml: rssFeed },\n  binary: {\n    data: await this.helpers.prepareBinaryData(buffer)\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -428,7 +428,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "0a3c6de7-754e-469a-924a-496b62799daa",
+  "versionId": "aeaee29a-22e9-4b20-b5e3-524d29354b8c",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b3d31a9b25b59f765069dd0795a974a7334833c28e26dcc3a923733572dd0ef0"
