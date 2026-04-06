@@ -6,11 +6,14 @@ services:
     volumes:
       - n8n-data:/home/node/.n8n
       - ./shared:/data/shared
+    env_file:
+      - .env
     networks:
       - n8n-network
     environment:
       - N8N_BLOCK_FILE_ACCESS_TO_N8N_FILES=false
       - N8N_RESTRICT_FILE_ACCESS_TO=/data/shared
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
 
   ollama:
     build:
@@ -36,16 +39,6 @@ services:
     volumes:
       - qdrant-storage:/qdrant/storage
     restart: unless-stopped
-
-  browserless:
-    image: browserless/chrome:latest
-    ports:
-      - "3000:3000"
-    networks:
-      - n8n-network
-    environment:
-      - MAX_CONCURRENT_SESSIONS=5
-      - PREBOOT_CHROME=true
 
 
 networks:
