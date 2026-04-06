@@ -23,10 +23,10 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are a news agent whose purpose is to search for the latest tech/computer science news across a variety of popular channels and output them. Look for the top 7 to 10 stories online. Try to find 10 stories. These articles should be diverse in content; don't have all of the found news be solely covering AI or cryptocurrency, for example. \n\nOnly search for news that has been published between {{ $json.startDate }} to {{ $json.endDate }} (the dates are in yyyy-mm-dd format).\n\nYour output should be in JSON format. It should be a single field called results, which contains list of JSON objects. Each object in this list should have the following fields:\n- title: The title of the news you found\n- content: Your summary of the news content. Cover important points in paragraph form in sufficient detail, but avoid repeating yourself. Target for at least two to three detailed paragraphs of summary content.\n- url: The URL to the article or piece of news covering this information.",
+        "text": "=You are a news agent whose purpose is to search for the latest tech/computer science news across a variety of popular channels and output them. Look for the top 7 to 10 stories online. Try to find 10 stories. These articles should be diverse in content; don't have all of the found news be solely covering AI or cryptocurrency, for example. The news should be focused on tech and computer science, and shouldn't be as focused on other disciplines unless there is a direct relation to tech and computer science.\n\nOnly search for news that has been published between {{ $json.startDate }} to {{ $json.endDate }} (the dates are in yyyy-mm-dd format).\n\nYour output should be in JSON format. It should be a single field called results, which contains list of JSON objects. Each object in this list should have the following fields:\n- title: The title of the news you found\n- content: Your summary of the news content. Cover important points in paragraph form in sufficient detail, but avoid repeating yourself. Target for at least two to four detailed paragraphs of summary content. These summaries should have a journalistic tone and should focus on convering information instead of referencing the article or qualities of the article.\n- url: The URL to the article or piece of news covering this information.",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "Summarize only based on information you searched for using the provided tool calls. Never provide information from your own knowledge.\nYou must utilize tool calls to find your information."
+          "systemMessage": "Summarize only based on information you searched for using the provided tool calls. Never provide information from your own knowledge.\nYou must utilize tool calls to find your information. When calling the HTTP request tool to search, never include double quotes in your searches."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -149,12 +149,12 @@
         },
         "repository": {
           "__rl": true,
-          "value": "ultra-n8n",
+          "value": "RSS-Feeds",
           "mode": "list",
-          "cachedResultName": "ultra-n8n",
-          "cachedResultUrl": "https://github.com/KedarPanchal/ultra-n8n"
+          "cachedResultName": "RSS-Feeds",
+          "cachedResultUrl": "https://github.com/KedarPanchal/RSS-Feeds"
         },
-        "filePath": "feed/techfeed.rss",
+        "filePath": "techfeed.rss",
         "fileContent": "={{ $('Write RSS Data').item.json.xml }}",
         "commitMessage": "Create public RSS feed"
       },
@@ -185,12 +185,12 @@
         },
         "repository": {
           "__rl": true,
-          "value": "ultra-n8n",
+          "value": "RSS-Feeds",
           "mode": "list",
-          "cachedResultName": "ultra-n8n",
-          "cachedResultUrl": "https://github.com/KedarPanchal/ultra-n8n"
+          "cachedResultName": "RSS-Feeds",
+          "cachedResultUrl": "https://github.com/KedarPanchal/RSS-Feeds"
         },
-        "filePath": "feed/techfeed.rss",
+        "filePath": "techfeed.rss",
         "fileContent": "={{ $('Write RSS Data').item.json.xml }}",
         "commitMessage": "Update public RSS feed"
       },
@@ -221,12 +221,12 @@
         },
         "repository": {
           "__rl": true,
-          "value": "ultra-n8n",
+          "value": "RSS-Feeds",
           "mode": "list",
-          "cachedResultName": "ultra-n8n",
-          "cachedResultUrl": "https://github.com/KedarPanchal/ultra-n8n"
+          "cachedResultName": "RSS-Feeds",
+          "cachedResultUrl": "https://github.com/KedarPanchal/RSS-Feeds"
         },
-        "filePath": "feed/techfeed.rss",
+        "filePath": "techfeed.rss",
         "asBinaryProperty": false,
         "additionalParameters": {}
       },
@@ -428,7 +428,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "1e7c12b2-10f2-49ed-b08c-390022649a16",
+  "versionId": "0a3c6de7-754e-469a-924a-496b62799daa",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b3d31a9b25b59f765069dd0795a974a7334833c28e26dcc3a923733572dd0ef0"
