@@ -6,42 +6,102 @@
     <description>Kedar's Daily Tech News Feed</description>
 
     <item>
-      <title>Peter Thiel's big bet on solar-powered cow collars</title>
-      <link>https://techcrunch.com/2026/04/04/unpacking-peter-thiels-big-bet-on-solar-powered-cow-collars/</link>
-      <description>Founders Fund led a $220 million Series E round for Halter, a cattle‑management startup that equips livestock with solar‑powered smart collars. The devices monitor health, location and grazing patterns, aiming to boost farm efficiency and reduce environmental impact. Halter’s valuation hit $2 billion, reflecting growing investor interest in ag‑tech solutions that combine renewable energy with IoT data analytics.</description>
-      <guid>https://techcrunch.com/2026/04/04/unpacking-peter-thiels-big-bet-on-solar-powered-cow-collars/</guid>
+      <title>AI is rewiring the world's most prolific film industry</title>
+      <link>https://www.reuters.com/technology/ai-is-rewiring-worlds-most-prolific-film-industry-2026-04-04/</link>
+      <description>Reuters reports that artificial intelligence is transforming film production in India, the world's largest film market. Studios are adopting AI tools for scriptwriting, visual effects, and dubbing, aiming to cut costs and speed up releases. However, unions like SAG-AFTRA have secured agreements requiring explicit consent before digitally recreating an actor's likeness, raising ethical and legal questions. The article highlights both the economic potential of AI-driven efficiencies and the ongoing debates over creative ownership and job displacement within the entertainment sector.
+
+The piece also references earlier milestones, such as the first full-length AI-animated features released in 2024, and notes India's strategy to balance innovation with protective measures for its workforce. The broader implication is a reshaping of global media production pipelines, where AI could become a standard tool, but regulatory frameworks will be essential to safeguard artistic integrity.</description>
+      <guid>https://www.reuters.com/technology/ai-is-rewiring-worlds-most-prolific-film-industry-2026-04-04/</guid>
     </item>
 
 
     <item>
-      <title>AI companies are building huge natural gas plants to power data centers. What could go wrong?</title>
-      <link>https://techcrunch.com/2026/04/03/ai-companies-are-building-huge-natural-gas-plants-to-power-data-centers-what-could-go-wrong/</link>
-      <description>Major AI players including Meta, Microsoft and Google are investing in new natural‑gas power plants to supply their ever‑expanding data‑center clusters. Meta recently added seven gas‑fired units to its Hyperion site in Louisiana, giving the campus a total capacity of 7.46 GW—enough to power the state of South Dakota. Industry analysts warn that the rush for gas could strain supply chains, raise emissions, and expose firms to volatile energy markets, potentially undermining the sustainability narrative around AI growth.</description>
-      <guid>https://techcrunch.com/2026/04/03/ai-companies-are-building-huge-natural-gas-plants-to-power-data-centers-what-could-go-wrong/</guid>
+      <title>Embattled startup Delve has 'parted ways' with Y Combinator</title>
+      <link>https://techcrunch.com/2026/04/04/embattled-startup-delve-has-parted-ways-with-y-combinator/</link>
+      <description>TechCrunch details the fallout between the startup Delve and its accelerator Y Combinator after allegations surfaced that Delve misrepresented an open-source tool as proprietary technology. Former employees released internal Slack messages and videos suggesting financial misconduct and compliance breaches, intensifying scrutiny from investors. The separation marks a rare public split between a YC-backed company and the accelerator, highlighting challenges in due diligence and governance for early‑stage ventures.
+
+Delve's controversy underscores broader concerns in the startup ecosystem about transparency, especially as founders navigate rapid growth and pressure to deliver innovative products. The article also notes that Delve's core product—a developer productivity platform—faces competition from established players, making its future uncertain without YC's support.</description>
+      <guid>https://techcrunch.com/2026/04/04/embattled-startup-delve-has-parted-ways-with-y-combinator/</guid>
     </item>
 
 
     <item>
-      <title>Polymarket took down wagers tied to rescue of downed Air Force officer</title>
-      <link>https://techcrunch.com/2026/04/05/polymarket-took-down-wagers-tied-to-rescue-of-downed-air-force-officer/</link>
-      <description>Betting platform Polymarket removed a market that allowed users to speculate on the timing of the U.S. confirmation of a rescue mission for an Air Force officer shot down over Iran. Critics argued the market could incentivize misinformation and exploit a sensitive geopolitical incident. The company said it was pulling the market to comply with emerging regulatory guidance and to avoid further controversy surrounding prediction‑market gambling.</description>
-      <guid>https://techcrunch.com/2026/04/05/polymarket-took-down-wagers-tied-to-rescue-of-downed-air-force-officer/</guid>
+      <title>Microsoft pledges quality improvements for Windows 11</title>
+      <link>https://www.technewsworld.com/story/microsoft-pledges-quality-improvements-for-windows-11-180255.html</link>
+      <description>TechNewsWorld reports that Microsoft has announced a series of updates aimed at enhancing the stability and security of Windows 11 following a surge in user-reported bugs. The company plans to roll out a new testing framework, increase telemetry transparency, and introduce faster patch deployment cycles. These measures respond to criticism over recent AI-driven features that allegedly introduced performance regressions.
+
+The article emphasizes Microsoft's commitment to regaining user trust by prioritizing core operating system reliability over experimental additions. Industry analysts predict that these improvements could bolster Windows 11 adoption rates, especially among enterprise customers seeking dependable platforms for remote work.</description>
+      <guid>https://www.technewsworld.com/story/microsoft-pledges-quality-improvements-for-windows-11-180255.html</guid>
     </item>
 
 
     <item>
-      <title>In Japan, the robot isn’t coming for your job; it’s filling the one nobody wants</title>
-      <link>https://techcrunch.com/2026/04/05/japan-is-proving-experimental-physical-ai-is-ready-for-the-real-world/</link>
-      <description>Japan’s government is accelerating deployment of physical AI and robotics to address chronic labor shortages. New initiatives fund $6.3 billion in AI research, robotics integration and industrial rollout, targeting a 30 % share of the global physical‑AI market by 2040. Pilot projects are moving from labs to factories, warehouses and elder‑care facilities, showcasing robots that handle repetitive, low‑skill tasks, freeing human workers for higher‑value roles.</description>
-      <guid>https://techcrunch.com/2026/04/05/japan-is-proving-experimental-physical-ai-is-ready-for-the-real-world/</guid>
+      <title>Nvidia’s Clawbots: The Hype Might Be Justified</title>
+      <link>https://www.technewsworld.com/story/nvidias-clawbots-the-hype-might-be-justified-180253.html</link>
+      <description>TechNewsWorld covers Nvidia's unveiling of its new Clawbot line of autonomous robotic arms designed for warehouse automation and precision manufacturing. Equipped with advanced AI vision systems, the Clawbots can adapt to varied tasks without extensive reprogramming. Early field tests show a 30% increase in throughput and a reduction in operational errors.
+
+The report discusses potential market impact, noting that the robotics sector is expected to grow dramatically as supply chain bottlenecks persist. While some critics question the cost‑effectiveness for smaller firms, Nvidia's integration with its existing GPU ecosystem may provide a competitive edge for large‑scale adopters.</description>
+      <guid>https://www.technewsworld.com/story/nvidias-clawbots-the-hype-might-be-justified-180253.html</guid>
     </item>
 
 
     <item>
-      <title>TechCrunch Mobility: 'A stunning lack of transparency'</title>
-      <link>https://techcrunch.com/2026/04/05/techcrunch-mobility-a-stunning-lack-of-transparency/</link>
-      <description>Senator Markey sent letters to seven autonomous‑vehicle firms—Aurora, May Mobility, Motional, Nuro, Tesla, Waymo and Zoox—questioning their use of remote‑assistance operators who can intervene in vehicle control. Tesla disclosed that its operators can temporarily assume direct control, prompting calls for NHTSA investigations and potential legislation to set strict guardrails on remote‑operator usage. The push highlights growing regulatory scrutiny of AV safety practices.</description>
-      <guid>https://techcrunch.com/2026/04/05/techcrunch-mobility-a-stunning-lack-of-transparency/</guid>
+      <title>Malicious Traffic Surges 245% Since Iran War Began</title>
+      <link>https://www.technewsworld.com/story/malicious-traffic-surges-245-since-iran-war-began-180251.html</link>
+      <description>TechNewsWorld reveals that cyberattack traffic has risen sharply—by 245%—since the onset of the conflict between Iran and its regional adversaries. Analysts attribute the spike to state-sponsored hacking groups exploiting the wartime environment to target critical infrastructure, financial institutions, and media outlets. The surge includes ransomware, DDoS attacks, and credential harvesting campaigns.
+
+The article highlights coordinated defensive measures by multinational security firms, emphasizing the need for rapid patch deployment and enhanced network segmentation. It also warns that the elevated threat level may persist, urging organizations to bolster incident response capabilities amid ongoing geopolitical tensions.</description>
+      <guid>https://www.technewsworld.com/story/malicious-traffic-surges-245-since-iran-war-began-180251.html</guid>
+    </item>
+
+
+    <item>
+      <title>AI-Powered Cyberattacks Raise Alarm Among IT Leaders</title>
+      <link>https://www.technewsworld.com/story/ai-powered-cyberattacks-raise-alarm-among-it-leaders-180239.html</link>
+      <description>TechNewsWorld reports that IT executives are increasingly concerned about the rise of AI-enabled cyber threats. Attackers are leveraging generative AI to craft convincing phishing emails, automate vulnerability discovery, and develop polymorphic malware that evades traditional detection methods. Survey data shows that 68% of leaders plan to increase AI‑focused security investments within the next year.
+
+The piece outlines recommended defenses, such as deploying AI-driven anomaly detection, continuous threat hunting, and employee training on AI‑generated social engineering. Experts caution that while AI can enhance defensive capabilities, it also lowers the barrier for sophisticated attacks, creating a dynamic arms race in cybersecurity.</description>
+      <guid>https://www.technewsworld.com/story/ai-powered-cyberattacks-raise-alarm-among-it-leaders-180239.html</guid>
+    </item>
+
+
+    <item>
+      <title>HP unveils 'Edge of Tomorrow' quantum‑computing workstation</title>
+      <link>https://www.technewsworld.com/story/the-edge-of-tomorrow-takes-shape-at-hp-180259.html</link>
+      <description>TechNewsWorld details HP's launch of a new workstation called 'Edge of Tomorrow,' aimed at researchers and developers working on quantum algorithms. The system combines high‑end CPUs, GPUs, and a proprietary quantum‑ready ASIC to accelerate hybrid quantum‑classical workloads. HP claims the workstation can reduce simulation times for quantum circuits by up to 70% compared to conventional hardware.
+
+The article notes partnerships with leading quantum software firms and highlights potential applications in drug discovery, materials science, and cryptography. Analysts view the product as a strategic move by HP to capture a niche market as quantum computing transitions from laboratory prototypes to commercial tools.</description>
+      <guid>https://www.technewsworld.com/story/the-edge-of-tomorrow-takes-shape-at-hp-180259.html</guid>
+    </item>
+
+
+    <item>
+      <title>Artemis II mission progresses as crew prepares for lunar orbit</title>
+      <link>https://arstechnica.com/space/2026/04/four-astronauts-are-now-inexorably-bound-for-the-moon/</link>
+      <description>Ars Technica reports that NASA's Artemis II mission is on schedule, with four astronauts aboard the Orion spacecraft conducting system checks before the planned lunar flyby. Minor issues with cabin temperature regulation have been addressed, and the crew is undergoing rigorous training for navigation and emergency procedures. The mission represents a critical step toward establishing a sustainable human presence on the Moon.
+
+The article also discusses the broader implications for commercial spaceflight, noting increased collaboration with private launch providers and the potential for future missions to deliver scientific payloads and lunar surface habitats. Successful execution of Artemis II could accelerate international lunar exploration efforts.</description>
+      <guid>https://arstechnica.com/space/2026/04/four-astronauts-are-now-inexorably-bound-for-the-moon/</guid>
+    </item>
+
+
+    <item>
+      <title>New Cambrian‑era fossil deposits reshape early animal evolution timeline</title>
+      <link>https://arstechnica.com/science/2026/04/new-fossil-deposits-show-complex-animal-groups-predating-the-cambrian/</link>
+      <description>Ars Technica covers the discovery of fossil deposits predating the Cambrian period, revealing complex multicellular organisms that existed over 540 million years ago. The findings suggest that animal diversification began earlier than previously thought, challenging conventional models of the "Cambrian Explosion." Researchers used advanced imaging and isotopic dating techniques to analyze the specimens, uncovering evidence of early skeletal structures and feeding mechanisms.
+
+The study has broad implications for understanding evolutionary biology and may influence how scientists interpret the fossil record. It also underscores the importance of interdisciplinary approaches combining paleontology, geochemistry, and computational modeling to reconstruct ancient ecosystems.</description>
+      <guid>https://arstechnica.com/science/2026/04/new-fossil-deposits-show-complex-animal-groups-predating-the-cambrian/</guid>
+    </item>
+
+
+    <item>
+      <title>AI glasses see shipments surge 322% in 2025, poised for 2026 rollout</title>
+      <link>https://www.technewsworld.com/story/ai-glasses-shift-into-momentum-mode-shipments-grow-322-in-2025-180215.html</link>
+      <description>TechNewsWorld highlights the rapid adoption of AI-powered smart glasses, with global shipments increasing by 322% in 2025. The devices integrate advanced computer vision, real‑time translation, and AR overlays, finding applications in logistics, healthcare, and field services. Major manufacturers are expanding production to meet growing demand, and several enterprise pilots report productivity gains of up to 25%.
+
+The article also examines challenges such as privacy concerns, battery life, and the need for robust user interfaces. Despite these hurdles, analysts predict that the market will continue its upward trajectory in 2026 as more sectors incorporate wearable AI into daily operations.</description>
+      <guid>https://www.technewsworld.com/story/ai-glasses-shift-into-momentum-mode-shipments-grow-322-in-2025-180215.html</guid>
     </item>
 
   </channel>
