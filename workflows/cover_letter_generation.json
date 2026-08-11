@@ -21,26 +21,6 @@
     },
     {
       "parameters": {
-        "model": "z-ai/glm-4.5-air:free",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
-      "typeVersion": 1,
-      "position": [
-        -208,
-        912
-      ],
-      "id": "d860dbe2-9bdb-4662-8a99-b2db002ca374",
-      "name": "OpenRouter Chat Model",
-      "credentials": {
-        "openRouterApi": {
-          "id": "1599VTUqP3R2NYuh",
-          "name": "OpenRouter account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "dataType": "binary",
         "textSplittingMode": "custom",
         "options": {}
@@ -432,7 +412,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        16,
+        -208,
         160
       ],
       "id": "98d8d357-b8b1-4d65-8e37-bdf2f64603f7",
@@ -446,7 +426,7 @@
       "type": "n8n-nodes-datastore.datastore",
       "typeVersion": 1,
       "position": [
-        224,
+        0,
         160
       ],
       "id": "7153ab4a-dfdb-4819-88cc-d8f9eafae310",
@@ -456,7 +436,7 @@
       "parameters": {
         "content": "## Store Persistent Data",
         "height": 240,
-        "width": 720,
+        "width": 464,
         "color": 7
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -495,18 +475,6 @@
       }
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        -208,
-        160
-      ],
-      "id": "16acdf74-897a-4a21-b695-8db1745b622e",
-      "name": "Branch Off",
-      "alwaysOutputData": false
-    },
-    {
       "parameters": {
         "fieldToSplitOut": "assets",
         "options": {}
@@ -539,20 +507,6 @@
       ],
       "id": "b0efcd81-f0ae-42b0-b770-2de9c23af8c6",
       "name": "HTTP Request"
-    },
-    {
-      "parameters": {
-        "operation": "pdf",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1.1,
-      "position": [
-        800,
-        1152
-      ],
-      "id": "e6febc1b-07c7-4068-b51c-8c7ae8030b71",
-      "name": "Extract from File"
     },
     {
       "parameters": {
@@ -589,6 +543,40 @@
           "name": "GitHub account"
         }
       }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        912
+      ],
+      "id": "1654226f-5d1e-4e48-9935-963f207e2f9d",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "npWSj1XOztBBID3c",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        800,
+        1152
+      ],
+      "id": "e6febc1b-07c7-4068-b51c-8c7ae8030b71",
+      "name": "Get Text"
     }
   ],
   "pinData": {},
@@ -599,17 +587,6 @@
           {
             "node": "Create Cover Letter",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenRouter Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -750,7 +727,7 @@
             "index": 0
           },
           {
-            "node": "Branch Off",
+            "node": "Check Cover Letter URL Existence",
             "type": "main",
             "index": 0
           }
@@ -779,17 +756,6 @@
         ]
       ]
     },
-    "Branch Off": {
-      "main": [
-        [
-          {
-            "node": "Check Cover Letter URL Existence",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Extract Latest Release": {
       "main": [
         [
@@ -805,18 +771,7 @@
       "main": [
         [
           {
-            "node": "Extract from File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract from File": {
-      "main": [
-        [
-          {
-            "node": "Create RAG Context",
+            "node": "Get Text",
             "type": "main",
             "index": 0
           }
@@ -833,6 +788,28 @@
           }
         ]
       ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Text": {
+      "main": [
+        [
+          {
+            "node": "Create RAG Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -841,7 +818,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "29abd00e-3d0e-4faa-81f8-faaa665ea4a0",
+  "versionId": "bb4eda8c-a46b-485e-9bf8-824a879b8032",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b3d31a9b25b59f765069dd0795a974a7334833c28e26dcc3a923733572dd0ef0"
