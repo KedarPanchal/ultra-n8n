@@ -7,7 +7,7 @@
         "text": "=Job Description: {{ $('Submit Job Description').item.json['Job Description'] }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "Generate a professional cover letter tailored to the job description, highlighting the most important skills and experiences from my resume. Be \n\nThe cover letter should:\n- Be clear, concise, short, and professional\n- Address the key requirements of the job description\n- Demonstrate enthusiasm and fit for the role"
+          "systemMessage": "Generate a professional cover letter tailored to the job description, highlighting the most important skills and experiences from my resume. \n\nThe cover letter should:\n- Be clear, concise, short, and professional\n- Address the key requirements of the job description\n- Demonstrate enthusiasm and fit for the role\n\nThe cover letter is about Kedar Panchal, a computer science student at Texas A&M minoring in Cybersecurity. When describing his past experience, use only the information found within his resume."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -818,7 +818,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "bb4eda8c-a46b-485e-9bf8-824a879b8032",
+  "versionId": "792af4c5-1f5f-41cc-b2f9-3c8d97f515da",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b3d31a9b25b59f765069dd0795a974a7334833c28e26dcc3a923733572dd0ef0"
