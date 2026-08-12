@@ -7,7 +7,8 @@
         "text": "=Job Description: {{ $('Submit Job Description').item.json['Job Description'] }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "Generate a professional cover letter tailored to the job description, highlighting the most important skills and experiences from my resume. \n\nThe cover letter should:\n- Be clear, concise, short, and professional\n- Address the key requirements of the job description\n- Demonstrate enthusiasm and fit for the role\n\nThe cover letter is about Kedar Panchal, a computer science student at Texas A&M minoring in Cybersecurity. When describing his past experience, use only the information found within his resume."
+          "systemMessage": "Generate a professional cover letter tailored to the job description, highlighting the most important skills and experiences from my resume. \n\nThe cover letter should:\n- Be clear, concise, short, and professional\n- Address the key requirements of the job description\n- Demonstrate enthusiasm and fit for the role\n\nThe cover letter is about Kedar Panchal, a computer science student at Texas A&M minoring in Cybersecurity. When describing his past experience, use ONLY the information found within his resume, and don't use any other information outside of that when describing him.\n\nYou have exactly THREE attempts to use the vector store retrieval tool. Do not query the tool multiple times with different variations of the same question. If the first tool output does not contain the answer, state clearly that the information was not found in the documents and reply based on that.",
+          "maxIterations": 10
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -17,7 +18,8 @@
         720
       ],
       "id": "e81edaab-76dc-4c6b-bd19-e063c34055ff",
-      "name": "AI Agent"
+      "name": "AI Agent",
+      "alwaysOutputData": false
     },
     {
       "parameters": {
@@ -546,26 +548,6 @@
     },
     {
       "parameters": {
-        "model": "openai/gpt-oss-120b",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
-      "typeVersion": 1,
-      "position": [
-        -208,
-        912
-      ],
-      "id": "1654226f-5d1e-4e48-9935-963f207e2f9d",
-      "name": "Groq Chat Model",
-      "credentials": {
-        "groqApi": {
-          "id": "npWSj1XOztBBID3c",
-          "name": "Groq account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "operation": "pdf",
         "options": {}
       },
@@ -577,6 +559,26 @@
       ],
       "id": "e6febc1b-07c7-4068-b51c-8c7ae8030b71",
       "name": "Get Text"
+    },
+    {
+      "parameters": {
+        "model": "nvidia/nemotron-3-super-120b-a12b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        912
+      ],
+      "id": "2fa49de3-8c09-4b93-907e-4dd7df9660b2",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "1599VTUqP3R2NYuh",
+          "name": "OpenRouter account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -789,23 +791,23 @@
         ]
       ]
     },
-    "Groq Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Get Text": {
       "main": [
         [
           {
             "node": "Create RAG Context",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -818,7 +820,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "792af4c5-1f5f-41cc-b2f9-3c8d97f515da",
+  "versionId": "2b9cd134-c935-4ad2-83da-035cc747107c",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "b3d31a9b25b59f765069dd0795a974a7334833c28e26dcc3a923733572dd0ef0"
